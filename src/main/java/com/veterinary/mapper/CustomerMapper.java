@@ -7,16 +7,19 @@ import com.veterinary.model.Customer;
 public class CustomerMapper {
 
     public static Customer toEntity(CustomerRequestDTO dto) {
-        Customer c = new Customer();
-        c.setName(dto.name());
-        c.setPhone(dto.phone());
-        c.setMail(dto.mail());
-        c.setAddress(dto.address());
-        c.setCity(dto.city());
-        return c;
+        if (dto == null) return null;
+        Customer customer = new Customer();
+        customer.setFirstName(dto.getFirstName());
+        customer.setLastName(dto.getLastName());
+        return customer;
     }
 
-    public static CustomerResponseDTO toDTO(Customer c) {
-        return new CustomerResponseDTO(c.getId(), c.getName(), c.getPhone(), c.getMail(), c.getCity());
+    public static CustomerResponseDTO toDTO(Customer customer) {
+        if (customer == null) return null;
+        CustomerResponseDTO dto = new CustomerResponseDTO();
+        dto.setId(customer.getId());
+        dto.setFirstName(customer.getFirstName());
+        dto.setLastName(customer.getLastName());
+        return dto;
     }
 }

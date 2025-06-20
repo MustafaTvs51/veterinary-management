@@ -1,5 +1,6 @@
 package com.veterinary.service.impl;
 
+import com.veterinary.business.CustomerBusinessRules;
 import com.veterinary.dto.CustomerRequestDTO;
 import com.veterinary.dto.CustomerResponseDTO;
 import com.veterinary.exception.ResourceNotFoundException;
@@ -15,15 +16,19 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerBusinessRules customerBusinessRules;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerBusinessRules customerBusinessRules) {
         this.customerRepository = customerRepository;
+        this.customerBusinessRules = customerBusinessRules;
     }
 
     @Override
     public CustomerResponseDTO save(CustomerRequestDTO dto) {
+        customerBusinessRules.checkIfCustomerWithSameNameExists(dto.getFirstName(), dto.getLastName());
         Customer customer = CustomerMapper.toEntity(dto);
-        return CustomerMapper.toDTO(customerRepository.save(customer));
+        Customer savedCustomer = customerRepository.save(customer);
+        return CustomerMapper.toDTO(savedCustomer);
     }
 
     @Override
@@ -35,15 +40,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO getById(Long id) {
-        Customer c = customerRepository.findById(id)
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " id'li müşteri bulunamadı"));
-        return CustomerMapper.toDTO(c);
+        return CustomerMapper.toDTO(customer);
     }
 
     @Override
     public void delete(Long id) {
-        Customer c = customerRepository.findById(id)
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " id'li müşteri bulunamadı"));
-        customerRepository.delete(c);
+        customerRepository.delete(customer);
     }
+
 }
