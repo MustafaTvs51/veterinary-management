@@ -1,19 +1,21 @@
 package com.veterinary.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class VaccineRequestDTO {
+public class AnimalVaccineRequestDTO {
 
-    @NotBlank
-    private String name;
+    @NotNull
+    private Long animalId;
 
-    @NotBlank
-    private String code;
+    @NotNull
+    private Long vaccineId;
+
+    @NotNull
+    private LocalDate applicationDate;
 
     @NotNull
     private LocalDate protectionStartDate;

@@ -10,18 +10,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "vaccines")
-public class Vaccine {
+@Table(name = "animal_vaccines")
+public class AnimalVaccine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id", nullable = false)
+    private Animal animal;
 
-    @Column(nullable = false, unique = true)
-    private String code;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vaccine_id", nullable = false)
+    private Vaccine vaccine;
+
+    @Column(nullable = false)
+    private LocalDate applicationDate;
 
     @Column(nullable = false)
     private LocalDate protectionStartDate;
