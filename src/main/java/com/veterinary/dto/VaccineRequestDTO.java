@@ -20,4 +20,7 @@ public class VaccineRequestDTO {
 
     @NotNull
     private LocalDate protectionFinishDate;
+
+    @NotNull
+    private Long animalId;
 }

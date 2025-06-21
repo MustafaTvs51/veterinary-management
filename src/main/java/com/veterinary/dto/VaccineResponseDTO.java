@@ -16,4 +16,6 @@ public class VaccineResponseDTO {
     private LocalDate protectionStartDate;
 
     private LocalDate protectionFinishDate;
+
+    private Long animalId;
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.veterinary.model.Appointment;
 
 @Service
 @RequiredArgsConstructor

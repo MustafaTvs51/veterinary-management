@@ -5,27 +5,28 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "vaccines")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "vaccines")
+@Builder
 public class Vaccine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
     private String code;
 
-    @Column(nullable = false)
     private LocalDate protectionStartDate;
 
-    @Column(nullable = false)
     private LocalDate protectionFinishDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 }

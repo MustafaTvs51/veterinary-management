@@ -12,8 +12,9 @@ public class VaccineMapper {
 
         return Vaccine.builder()
                 .name(dto.getName())
+                .code(dto.getCode())  // code eksikti
                 .protectionStartDate(dto.getProtectionStartDate())
-                .protectionEndDate(dto.getProtectionEndDate())
+                .protectionFinishDate(dto.getProtectionFinishDate())
                 .animal(animal)
                 .build();
     }
@@ -24,8 +25,9 @@ public class VaccineMapper {
         VaccineResponseDTO dto = new VaccineResponseDTO();
         dto.setId(vaccine.getId());
         dto.setName(vaccine.getName());
+        dto.setCode(vaccine.getCode());
         dto.setProtectionStartDate(vaccine.getProtectionStartDate());
-        dto.setProtectionEndDate(vaccine.getProtectionEndDate());
+        dto.setProtectionFinishDate(vaccine.getProtectionFinishDate());
         dto.setAnimalId(vaccine.getAnimal().getId());
 
         return dto;

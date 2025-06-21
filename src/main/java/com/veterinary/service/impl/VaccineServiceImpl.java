@@ -21,19 +21,19 @@ public class VaccineServiceImpl implements VaccineService {
 
     private final VaccineRepository vaccineRepository;
     private final VaccineBusinessRules vaccineBusinessRules;
-    private final AnimalRepository animalRepository; // AnimalRepository eklendi
+    private final AnimalRepository animalRepository;
 
     @Override
     public VaccineResponseDTO save(VaccineRequestDTO dto) {
-        // İş kurallarını uygula
-        vaccineBusinessRules.checkIfVaccineAlreadyExistsForAnimal(dto.getName(), dto.getAnimalId());
-        vaccineBusinessRules.validateProtectionDates(dto.getProtectionStartDate(), dto.getProtectionEndDate());
+        // İş kurallarını uygula (isim, kod, hayvan ve koruma süresi kontrolü)
+        vaccineBusinessRules.checkIfVaccineAlreadyExistsForAnimal(dto.getName(), dto.getCode(), dto.getAnimalId());
+        vaccineBusinessRules.validateProtectionDates(dto.getProtectionStartDate(), dto.getProtectionFinishDate());
 
         // Animal nesnesini veritabanından al
         Animal animal = animalRepository.findById(dto.getAnimalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Hayvan bulunamadı: " + dto.getAnimalId()));
 
-        // Mapper'a dto ve animal ile dönüşüm yaptır
+        // DTO’dan entity’ye dönüşüm
         Vaccine vaccine = VaccineMapper.toEntity(dto, animal);
         Vaccine savedVaccine = vaccineRepository.save(vaccine);
 
@@ -56,6 +56,10 @@ public class VaccineServiceImpl implements VaccineService {
 
     @Override
     public void delete(Long id) {
+        boolean exists = vaccineRepository.existsById(id);
+        if (!exists) {
+            throw new ResourceNotFoundException(id + " id’li aşı kayıtlı değil.");
+        }
         vaccineRepository.deleteById(id);
     }
 }

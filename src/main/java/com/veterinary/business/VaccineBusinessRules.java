@@ -13,13 +13,17 @@ public class VaccineBusinessRules {
 
     private final VaccineRepository vaccineRepository;
 
-    public void checkIfVaccineAlreadyExistsForAnimal(String name, Long animalId) {
-        boolean exists = vaccineRepository.existsByNameIgnoreCaseAndAnimalId(name, animalId);
+    // Aynı isim, kod ve hayvan için koruma bitiş tarihi geçmemiş aşı kontrolü
+    public void checkIfVaccineAlreadyExistsForAnimal(String name, String code, Long animalId) {
+        boolean exists = vaccineRepository.existsByNameIgnoreCaseAndCodeIgnoreCaseAndAnimalIdAndProtectionFinishDateAfter(
+                name, code, animalId, LocalDate.now()
+        );
         if (exists) {
-            throw new BusinessException("Bu hayvana aynı isimde aşı zaten uygulanmış.");
+            throw new BusinessException("Bu hayvana aynı isimde ve kodda, koruma süresi devam eden aşı zaten uygulanmış.");
         }
     }
 
+    // Tarih tutarlılığı kontrolü
     public void validateProtectionDates(LocalDate startDate, LocalDate endDate) {
         if (endDate.isBefore(startDate)) {
             throw new BusinessException("Koruma bitiş tarihi, başlangıç tarihinden önce olamaz.");
