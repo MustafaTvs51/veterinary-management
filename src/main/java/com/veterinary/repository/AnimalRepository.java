@@ -1,10 +1,10 @@
 package com.veterinary.repository;
 
-import com.veterinary.model.Animal;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.veterinary.model.Animal;
 
-@Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
+
+    boolean existsByOwnerId(Long ownerId);
     boolean existsByNameIgnoreCaseAndOwnerId(String name, Long ownerId);
 }

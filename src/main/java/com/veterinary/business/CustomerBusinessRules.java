@@ -22,7 +22,7 @@ public class CustomerBusinessRules {
     private final AnimalRepository animalRepository;
 
     public void checkIfCustomerHasAnimal(Long customerId) {
-        boolean hasAnimal = animalRepository.existsByCustomerId(customerId);
+        boolean hasAnimal = animalRepository.existsByOwnerId(customerId);
         if (hasAnimal) {
             throw new IllegalStateException("Bu müşteri silinemez. İlişkili hayvan(lar) mevcut.");
         }
