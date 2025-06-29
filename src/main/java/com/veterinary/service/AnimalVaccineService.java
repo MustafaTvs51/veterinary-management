@@ -12,6 +12,7 @@ import com.veterinary.repository.VaccineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,7 @@ public class AnimalVaccineService {
         Vaccine vaccine = vaccineRepository.findById(dto.getVaccineId())
                 .orElseThrow(() -> new RuntimeException("Aşı bulunamadı"));
 
+        // Aynı kodlu aktif aşı varsa engelle
         businessRules.checkIfActiveVaccineExists(animal.getId(), vaccine.getCode());
 
         AnimalVaccine animalVaccine = new AnimalVaccine();
@@ -42,47 +44,31 @@ public class AnimalVaccineService {
 
         animalVaccine = animalVaccineRepository.save(animalVaccine);
 
-        AnimalVaccineResponseDTO responseDTO = new AnimalVaccineResponseDTO();
-        responseDTO.setId(animalVaccine.getId());
-        responseDTO.setAnimalId(animal.getId());
-        responseDTO.setVaccineId(vaccine.getId());
-        responseDTO.setApplicationDate(animalVaccine.getApplicationDate());
-        responseDTO.setProtectionStartDate(animalVaccine.getProtectionStartDate());
-        responseDTO.setProtectionFinishDate(animalVaccine.getProtectionFinishDate());
-
-        return responseDTO;
+        return mapToDto(animalVaccine);
     }
 
     public List<AnimalVaccineResponseDTO> getByAnimalId(Long animalId) {
         return animalVaccineRepository.findByAnimalId(animalId)
                 .stream()
-                .map(av -> {
-                    AnimalVaccineResponseDTO dto = new AnimalVaccineResponseDTO();
-                    dto.setId(av.getId());
-                    dto.setAnimalId(av.getAnimal().getId());
-                    dto.setVaccineId(av.getVaccine().getId());
-                    dto.setApplicationDate(av.getApplicationDate());
-                    dto.setProtectionStartDate(av.getProtectionStartDate());
-                    dto.setProtectionFinishDate(av.getProtectionFinishDate());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    // Başlangıç ve bitiş tarihleri arasında koruyuculuğu biten aşıları listeleme
-    public List<AnimalVaccineResponseDTO> getByProtectionFinishDateBetween(java.time.LocalDate start, java.time.LocalDate end) {
+    public List<AnimalVaccineResponseDTO> getByProtectionFinishDateBetween(LocalDate start, LocalDate end) {
         return animalVaccineRepository.findByProtectionFinishDateBetween(start, end)
                 .stream()
-                .map(av -> {
-                    AnimalVaccineResponseDTO dto = new AnimalVaccineResponseDTO();
-                    dto.setId(av.getId());
-                    dto.setAnimalId(av.getAnimal().getId());
-                    dto.setVaccineId(av.getVaccine().getId());
-                    dto.setApplicationDate(av.getApplicationDate());
-                    dto.setProtectionStartDate(av.getProtectionStartDate());
-                    dto.setProtectionFinishDate(av.getProtectionFinishDate());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    private AnimalVaccineResponseDTO mapToDto(AnimalVaccine av) {
+        AnimalVaccineResponseDTO dto = new AnimalVaccineResponseDTO();
+        dto.setId(av.getId());
+        dto.setAnimalId(av.getAnimal().getId());
+        dto.setVaccineId(av.getVaccine().getId());
+        dto.setApplicationDate(av.getApplicationDate());
+        dto.setProtectionStartDate(av.getProtectionStartDate());
+        dto.setProtectionFinishDate(av.getProtectionFinishDate());
+        return dto;
     }
 }

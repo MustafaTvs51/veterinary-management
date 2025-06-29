@@ -27,6 +27,12 @@ public class CustomerBusinessRules {
             throw new IllegalStateException("Bu müşteri silinemez. İlişkili hayvan(lar) mevcut.");
         }
     }
+    public void checkIfCustomerNameConflict(Long id, String firstName, String lastName) {
+        boolean exists = customerRepository.existsByFirstNameAndLastNameAndIdNot(firstName, lastName, id);
+        if (exists) {
+            throw new RuntimeException("Aynı isimde başka bir müşteri zaten mevcut.");
+        }
+    }
 
 
 }

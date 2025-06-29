@@ -26,7 +26,8 @@ public class Vaccine {
 
     private LocalDate protectionFinishDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id")
+    @ManyToOne(fetch = FetchType.LAZY) // Hayvan-aşı ilişkisi: çok aşı → bir hayvan
+    @JoinColumn(name = "animal_id", nullable = false)
     private Animal animal;
 }
+

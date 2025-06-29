@@ -13,4 +13,6 @@ public interface AvailableDateRepository extends JpaRepository<AvailableDate, Lo
     boolean existsByDoctorIdAndAvailableDate(Long doctorId, LocalDate availableDate);
 
     void deleteByDoctorId(Long doctorId);
+
+
 }

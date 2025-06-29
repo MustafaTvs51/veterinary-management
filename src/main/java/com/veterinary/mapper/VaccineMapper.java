@@ -6,13 +6,10 @@ import com.veterinary.model.Animal;
 import com.veterinary.model.Vaccine;
 
 public class VaccineMapper {
-
     public static Vaccine toEntity(VaccineRequestDTO dto, Animal animal) {
-        if (dto == null || animal == null) return null;
-
         return Vaccine.builder()
                 .name(dto.getName())
-                .code(dto.getCode())  // code eksikti
+                .code(dto.getCode())
                 .protectionStartDate(dto.getProtectionStartDate())
                 .protectionFinishDate(dto.getProtectionFinishDate())
                 .animal(animal)
@@ -20,16 +17,13 @@ public class VaccineMapper {
     }
 
     public static VaccineResponseDTO toDTO(Vaccine vaccine) {
-        if (vaccine == null) return null;
-
-        VaccineResponseDTO dto = new VaccineResponseDTO();
-        dto.setId(vaccine.getId());
-        dto.setName(vaccine.getName());
-        dto.setCode(vaccine.getCode());
-        dto.setProtectionStartDate(vaccine.getProtectionStartDate());
-        dto.setProtectionFinishDate(vaccine.getProtectionFinishDate());
-        dto.setAnimalId(vaccine.getAnimal().getId());
-
-        return dto;
+        return VaccineResponseDTO.builder()
+                .id(vaccine.getId())
+                .name(vaccine.getName())
+                .code(vaccine.getCode())
+                .protectionStartDate(vaccine.getProtectionStartDate())
+                .protectionFinishDate(vaccine.getProtectionFinishDate())
+                .animalId(vaccine.getAnimal().getId())
+                .build();
     }
 }

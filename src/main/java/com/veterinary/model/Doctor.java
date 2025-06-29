@@ -1,8 +1,6 @@
 package com.veterinary.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,23 +16,25 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @NotBlank(message = "İsim boş olamaz")
+
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Soyisim boş olamaz")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    private String specialty;
-
     @Column(nullable = false)
-    @NotBlank(message = "Telefon numarası boş olamaz")
     private String phone;
 
     @Column(nullable = false, unique = true)
-    @Email(message = "Geçerli bir email adresi giriniz")
     private String email;
 
-    // Lombok ile getter ve setter otomatik
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String city;
+
+
+    // Gerekirse ek alan: private String specialty;
 }

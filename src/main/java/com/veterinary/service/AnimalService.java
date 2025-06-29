@@ -10,4 +10,6 @@ public interface AnimalService {
     List<AnimalResponseDTO> getAll();
     AnimalResponseDTO getById(Long id);
     void delete(Long id);
+    AnimalResponseDTO update(Long id, AnimalRequestDTO dto);
+        List<AnimalResponseDTO> searchByName(String name);
 }

@@ -14,4 +14,9 @@ public interface CustomerService {
     CustomerResponseDTO getById(Long id);
 
     void delete(Long id);
+
+    List<CustomerResponseDTO> searchByName(String name);
+
+    CustomerResponseDTO update(Long id, CustomerRequestDTO dto);
+
 }

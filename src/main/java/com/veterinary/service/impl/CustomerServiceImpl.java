@@ -13,31 +13,33 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
 @RequiredArgsConstructor
-@Slf4j // Lombok ile Logger eklenir
+@Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerBusinessRules customerBusinessRules;
+    private final CustomerMapper customerMapper; // Mapper eklenmeli
 
     @Override
     public CustomerResponseDTO save(CustomerRequestDTO dto) {
         log.info("Yeni müşteri kaydı: {} {}", dto.getFirstName(), dto.getLastName());
         customerBusinessRules.checkIfCustomerWithSameNameExists(dto.getFirstName(), dto.getLastName());
-        Customer customer = CustomerMapper.toEntity(dto);
+        Customer customer = customerMapper.toEntity(dto);
         Customer saved = customerRepository.save(customer);
         log.debug("Kaydedilen müşteri ID: {}", saved.getId());
-        return CustomerMapper.toDTO(saved);
+        return customerMapper.toDTO(saved);
     }
 
     @Override
     public List<CustomerResponseDTO> getAll() {
         log.info("Tüm müşteriler getiriliyor.");
         return customerRepository.findAll().stream()
-                .map(CustomerMapper::toDTO)
-                .toList();
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -45,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("ID ile müşteri aranıyor: {}", id);
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " id'li müşteri bulunamadı"));
-        return CustomerMapper.toDTO(customer);
+        return customerMapper.toDTO(customer);
     }
 
     @Override
@@ -56,4 +58,35 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.delete(customer);
         log.info("Müşteri silindi - ID: {}", id);
     }
+
+    @Override
+    public List<CustomerResponseDTO> searchByName(String name) {
+        log.info("İsim ile müşteri aranıyor: {}", name);
+        List<Customer> customers = customerRepository
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name);
+        return customers.stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public CustomerResponseDTO update(Long id, CustomerRequestDTO dto) {
+        log.info("Müşteri güncelleniyor - ID: {}", id);
+
+        Customer existing = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id + " id'li müşteri bulunamadı"));
+
+        // Gerekirse iş kuralları ekle (aynı isimli başka müşteri var mı vs.)
+        customerBusinessRules.checkIfCustomerNameConflict(id, dto.getFirstName(), dto.getLastName());
+
+        existing.setFirstName(dto.getFirstName());
+        existing.setLastName(dto.getLastName());
+
+        Customer updated = customerRepository.save(existing);
+
+        log.debug("Müşteri güncellendi - ID: {}", updated.getId());
+
+        return customerMapper.toDTO(updated);
+    }
+
+
 }

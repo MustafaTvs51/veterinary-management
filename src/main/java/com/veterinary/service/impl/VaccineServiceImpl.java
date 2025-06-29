@@ -13,6 +13,7 @@ import com.veterinary.service.VaccineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,15 +26,11 @@ public class VaccineServiceImpl implements VaccineService {
 
     @Override
     public VaccineResponseDTO save(VaccineRequestDTO dto) {
-        // İş kurallarını uygula (isim, kod, hayvan ve koruma süresi kontrolü)
-        vaccineBusinessRules.checkIfVaccineAlreadyExistsForAnimal(dto.getName(), dto.getCode(), dto.getAnimalId());
         vaccineBusinessRules.validateProtectionDates(dto.getProtectionStartDate(), dto.getProtectionFinishDate());
 
-        // Animal nesnesini veritabanından al
         Animal animal = animalRepository.findById(dto.getAnimalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Hayvan bulunamadı: " + dto.getAnimalId()));
 
-        // DTO’dan entity’ye dönüşüm
         Vaccine vaccine = VaccineMapper.toEntity(dto, animal);
         Vaccine savedVaccine = vaccineRepository.save(vaccine);
 
@@ -51,15 +48,51 @@ public class VaccineServiceImpl implements VaccineService {
     public VaccineResponseDTO getById(Long id) {
         Vaccine vaccine = vaccineRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Aşı bulunamadı: " + id));
+
         return VaccineMapper.toDTO(vaccine);
     }
 
     @Override
     public void delete(Long id) {
-        boolean exists = vaccineRepository.existsById(id);
-        if (!exists) {
-            throw new ResourceNotFoundException(id + " id’li aşı kayıtlı değil.");
+        if (!vaccineRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Aşı bulunamadı: " + id);
         }
+
         vaccineRepository.deleteById(id);
+    }
+
+    @Override
+    public List<VaccineResponseDTO> getByAnimalId(Long animalId) {
+        return vaccineRepository.findByAnimal_Id(animalId).stream()
+                .map(VaccineMapper::toDTO)
+                .toList();
+    }
+
+
+    @Override
+    public List<VaccineResponseDTO> getByProtectionFinishDateBetween(LocalDate startDate, LocalDate endDate) {
+        return vaccineRepository.findByProtectionFinishDateBetween(startDate, endDate).stream()
+                .map(VaccineMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public VaccineResponseDTO update(Long id, VaccineRequestDTO dto) {
+        Vaccine existing = vaccineRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Aşı bulunamadı: " + id));
+
+        Animal animal = animalRepository.findById(dto.getAnimalId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hayvan bulunamadı: " + dto.getAnimalId()));
+
+        vaccineBusinessRules.validateProtectionDates(dto.getProtectionStartDate(), dto.getProtectionFinishDate());
+
+        existing.setName(dto.getName());
+        existing.setCode(dto.getCode());
+        existing.setProtectionStartDate(dto.getProtectionStartDate());
+        existing.setProtectionFinishDate(dto.getProtectionFinishDate());
+        existing.setAnimal(animal);
+
+        Vaccine updated = vaccineRepository.save(existing);
+        return VaccineMapper.toDTO(updated);
     }
 }

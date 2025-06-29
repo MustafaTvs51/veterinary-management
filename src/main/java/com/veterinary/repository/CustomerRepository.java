@@ -17,4 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     // CustomerBusinessRules'ta kullanmak için:
     boolean existsByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
+
+    boolean existsByFirstNameAndLastNameAndIdNot(String firstName, String lastName, Long id);
+
 }

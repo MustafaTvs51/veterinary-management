@@ -23,26 +23,24 @@ public class AnimalServiceImpl implements AnimalService {
     private final AnimalRepository animalRepository;
     private final CustomerRepository customerRepository;
     private final AnimalBusinessRules animalBusinessRules;
+    private final AnimalMapper animalMapper;
 
     @Override
     public AnimalResponseDTO save(AnimalRequestDTO dto) {
-        // Öncelikle sahibi bul
         Customer owner = customerRepository.findById(dto.getOwnerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Sahip bulunamadı: " + dto.getOwnerId()));
 
-        // İş kuralı kontrolü: Aynı isimli hayvan aynı sahip için olamaz
         animalBusinessRules.checkIfAnimalNameExistsForOwner(dto.getName(), dto.getOwnerId());
 
-        // Mapping ve kayıt
-        Animal animal = AnimalMapper.toEntity(dto, owner);
+        Animal animal = animalMapper.toEntity(dto, owner);
         Animal saved = animalRepository.save(animal);
-        return AnimalMapper.toDTO(saved);
+        return animalMapper.toDTO(saved);
     }
 
     @Override
     public List<AnimalResponseDTO> getAll() {
         return animalRepository.findAll().stream()
-                .map(AnimalMapper::toDTO)
+                .map(animalMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -50,7 +48,7 @@ public class AnimalServiceImpl implements AnimalService {
     public AnimalResponseDTO getById(Long id) {
         Animal animal = animalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hayvan bulunamadı: " + id));
-        return AnimalMapper.toDTO(animal);
+        return animalMapper.toDTO(animal);
     }
 
     @Override
@@ -59,4 +57,30 @@ public class AnimalServiceImpl implements AnimalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Silinecek hayvan bulunamadı: " + id));
         animalRepository.delete(animal);
     }
+    @Override
+    public AnimalResponseDTO update(Long id, AnimalRequestDTO dto) {
+        Animal existingAnimal = animalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hayvan bulunamadı: " + id));
+
+        Customer owner = customerRepository.findById(dto.getOwnerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Sahip bulunamadı: " + dto.getOwnerId()));
+
+        animalBusinessRules.checkIfAnimalNameExistsForOwnerExcludingId(dto.getName(), dto.getOwnerId(), id);
+
+        existingAnimal.setName(dto.getName());
+        existingAnimal.setSpecies(dto.getSpecies());
+        existingAnimal.setBreed(dto.getBreed());
+        existingAnimal.setOwner(owner);
+
+        Animal updated = animalRepository.save(existingAnimal);
+        return animalMapper.toDTO(updated);
+    }
+    @Override
+    public List<AnimalResponseDTO> searchByName(String name) {
+        List<Animal> animals = animalRepository.findByNameContainingIgnoreCase(name);
+        return animals.stream()
+                .map(animalMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }

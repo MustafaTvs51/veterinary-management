@@ -63,4 +63,24 @@ public class CustomerController {
         customerService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "İsme göre müşteri arar", description = "İsme göre müşterileri filtreler.")
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerResponseDTO>> searchCustomers(@RequestParam String name) {
+        List<CustomerResponseDTO> customers = customerService.searchByName(name);
+        return ResponseEntity.ok(customers);
+    }
+    @Operation(summary = "Müşteri günceller", description = "Verilen ID'ye sahip müşteriyi günceller.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Müşteri başarıyla güncellendi"),
+            @ApiResponse(responseCode = "404", description = "Müşteri bulunamadı")
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id,
+                                                      @Valid @RequestBody CustomerRequestDTO dto) {
+        CustomerResponseDTO updatedCustomer = customerService.update(id, dto);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
 }
+

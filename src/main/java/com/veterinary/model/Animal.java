@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -15,14 +17,13 @@ public class Animal {
     private Long id;
 
     private String name;
-
-    private String species; // Tür (ör: kedi, köpek)
-
-    private String breed; // Irk (opsiyonel)
-
-    private Integer age;
+    private String species;
+    private String breed;
+    private String gender;
+    private String colour;
+    private LocalDate dateOfBirth;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer owner; // Hayvan sahibi müşteri
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer owner;
 }
