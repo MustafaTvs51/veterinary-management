@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -46,4 +48,31 @@ public class AppointmentController {
         appointmentService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @Operation(summary = "Doktor ID ve tarihe göre randevuları getirir")
+    @GetMapping("/doctor")
+    public ResponseEntity<List<AppointmentResponseDTO>> getByDoctorAndDate(
+            @RequestParam Long doctorId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        return ResponseEntity.ok(appointmentService.getByDoctorIdAndDate(doctorId, date));
+    }
+
+    @Operation(summary = "Hayvan ID ve tarihe göre randevuları getirir")
+    @GetMapping("/animal")
+    public ResponseEntity<List<AppointmentResponseDTO>> getByAnimalAndDate(
+            @RequestParam Long animalId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        return ResponseEntity.ok(appointmentService.getByAnimalIdAndDate(animalId, date));
+    }
+    @PutMapping("/{id}")
+    @Operation(summary = "Mevcut randevuyu güncelle")
+    public ResponseEntity<AppointmentResponseDTO> update(
+            @PathVariable Long id,
+            @Valid @RequestBody AppointmentRequestDTO dto
+    ) {
+        AppointmentResponseDTO updated = appointmentService.update(id, dto);
+        return ResponseEntity.ok(updated);
+    }
+
 }

@@ -9,12 +9,20 @@ import com.veterinary.model.Doctor;
 import com.veterinary.repository.AppointmentRepository;
 import com.veterinary.repository.AnimalRepository;
 import com.veterinary.repository.DoctorRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.veterinary.model.Appointment;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -82,9 +90,62 @@ public class AppointmentService {
         appointmentRepository.deleteById(id);
     }
 
-    // Tarih aralığı ve doktora göre filtreleme örneği (isteğe bağlı)
-    // public List<AppointmentResponseDTO> findByDoctorAndDateRange(Long doctorId, LocalDateTime start, LocalDateTime end) { ... }
 
-    // Tarih aralığı ve hayvana göre filtreleme örneği (isteğe bağlı)
-    // public List<AppointmentResponseDTO> findByAnimalAndDateRange(Long animalId, LocalDateTime start, LocalDateTime end) { ... }
+    public List<AppointmentResponseDTO> getByDoctorIdAndDate(Long doctorId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+
+        return appointmentRepository.findByDoctorIdAndAppointmentDateBetween(doctorId, startOfDay, endOfDay)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<AppointmentResponseDTO> getByAnimalIdAndDate(Long animalId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+
+        return appointmentRepository.findByAnimalIdAndAppointmentDateBetween(animalId, startOfDay, endOfDay)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    private AppointmentResponseDTO convertToDTO(Appointment appointment) {
+        AppointmentResponseDTO dto = new AppointmentResponseDTO();
+        dto.setId(appointment.getId());
+        dto.setDoctorId(appointment.getDoctor().getId());
+        dto.setAnimalId(appointment.getAnimal().getId());
+        dto.setAppointmentDate(appointment.getAppointmentDate());
+        return dto;
+    }
+    public AppointmentResponseDTO update(Long id, AppointmentRequestDTO dto) {
+        Appointment existing = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + " id'li randevu bulunamadı."));
+
+        Doctor doctor = doctorRepository.findById(dto.getDoctorId())
+                .orElseThrow(() -> new RuntimeException("Doktor bulunamadı"));
+
+        Animal animal = animalRepository.findById(dto.getAnimalId())
+                .orElseThrow(() -> new RuntimeException("Hayvan bulunamadı"));
+
+
+        appointmentBusinessRules.checkDoctorAvailability(doctor.getId(), dto.getAppointmentDate());
+
+
+        existing.setDoctor(doctor);
+        existing.setAnimal(animal);
+        existing.setAppointmentDate(dto.getAppointmentDate());
+
+        Appointment updated = appointmentRepository.save(existing);
+
+        AppointmentResponseDTO responseDTO = new AppointmentResponseDTO();
+        responseDTO.setId(updated.getId());
+        responseDTO.setDoctorId(updated.getDoctor().getId());
+        responseDTO.setAnimalId(updated.getAnimal().getId());
+        responseDTO.setAppointmentDate(updated.getAppointmentDate());
+
+        return responseDTO;
+    }
+
+
 }
