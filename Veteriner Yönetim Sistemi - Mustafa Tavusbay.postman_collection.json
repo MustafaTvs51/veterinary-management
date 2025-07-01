@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Ahmet Y\\u0131lmaz\",\n  \"phone\": \"05551234567\",\n  \"email\": \"ahmet@example.com\",\n  \"address\": \"Kad\\u0131k\\u00f6y, \\u0130stanbul\",\n  \"city\": \"\\u0130stanbul\"\n}",
+							"raw": "{\n  \"firstName\": \"Mehmet\",\n  \"lastName\": \"Metin\",\n  \"email\": \"metin@example.com\",\n  \"address\": \"Bahçelievler\",\n  \"city\": \"Ankara\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -29,14 +29,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers",
+							"raw": "http://localhost:8080/api/customers",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers"
 							]
 						}
@@ -45,6 +45,9 @@
 				},
 				{
 					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -53,15 +56,23 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers",
+							"raw": "localhost:8080/api/customers",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers"
 							]
 						}
@@ -70,6 +81,9 @@
 				},
 				{
 					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -78,17 +92,25 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers/1",
+							"raw": "localhost:8080/api/customers/21",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers",
-								"1"
+								"21"
 							]
 						}
 					},
@@ -105,16 +127,15 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/customers/1",
+							"raw": "localhost:8080/api/customers/20",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers",
-								"1"
+								"20"
 							]
 						}
 					},
@@ -122,6 +143,9 @@
 				},
 				{
 					"name": "searchByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -130,22 +154,30 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers/search?name=Ahmet",
+							"raw": "localhost:8080/api/customers/search?name=Mehmet",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers",
 								"search"
 							],
 							"query": [
 								{
 									"key": "name",
-									"value": "Ahmet"
+									"value": "Mehmet"
 								}
 							]
 						}
@@ -154,6 +186,9 @@
 				},
 				{
 					"name": "getAnimals",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -162,17 +197,26 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers/1/animals",
+							"raw": "http://localhost:8080/api/customers/20/animals",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers",
-								"1",
+								"20",
 								"animals"
 							]
 						}
@@ -191,7 +235,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Ahmet G\\u00fcn\",\n  \"phone\": \"05559874521\",\n  \"email\": \"ahmetgun@example.com\",\n  \"address\": \"Be\\u015fikta\\u015f, \\u0130stanbul\",\n  \"city\": \"\\u0130stanbul\"\n}",
+							"raw": "{\n  \"firstName\": \"Mustafa\",\n  \"lastName\": \"Demir\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -199,16 +243,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/customers/1",
+							"raw": "localhost:8080/api/customers/19",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"customers",
-								"1"
+								"19"
 							]
 						}
 					},
@@ -231,7 +274,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Karabas\",\n  \"species\": \"K\\u00f6pek\",\n  \"breed\": \"Golden\",\n  \"gender\": \"Erkek\",\n  \"colour\": \"Sar\\u0131\",\n  \"dateOfBirth\": \"2022-01-01\",\n  \"customerId\": 1\n}",
+							"raw": "{\n  \"name\": \"Karabas\",\n  \"species\": \"Köpek\",\n  \"breed\": \"Golden\",\n  \"gender\": \"Erkek\",\n  \"colour\": \"Sarışın\",\n  \"dateOfBirth\": \"2022-01-01\",\n  \"ownerId\": 20\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -239,14 +282,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/animals",
+							"raw": "http://localhost:8080/api/animals",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals"
 							]
 						}
@@ -264,14 +307,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/animals",
+							"raw": "localhost:8080/api/animals",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals"
 							]
 						}
@@ -289,14 +331,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/animals/1",
+							"raw": "localhost:8080/api/animals/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals",
 								"1"
 							]
@@ -314,15 +355,23 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/animals/1",
+							"raw": "localhost:8080/api/animals/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals",
 								"1"
 							]
@@ -332,6 +381,9 @@
 				},
 				{
 					"name": "searchByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -340,15 +392,24 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/animals/search?name=Karabas",
+							"raw": "http://localhost:8080/api/animals/search?name=Karabas",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals",
 								"search"
 							],
@@ -374,7 +435,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Karabas G\\u00fcn\",\n  \"species\": \"K\\u00f6pek\",\n  \"breed\": \"Golden Retriever\",\n  \"gender\": \"Erkek\",\n  \"colour\": \"Krem\",\n  \"dateOfBirth\": \"2022-01-01\",\n  \"customerId\": 1\n}",
+							"raw": "{\n  \"name\": \"Karabas\",\n  \"species\": \"Köpek\",\n  \"breed\": \"Golden\",\n  \"gender\": \"Erkek\",\n  \"colour\": \"krem\",\n  \"dateOfBirth\": \"2022-01-01\",\n  \"ownerId\": 20\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -382,14 +443,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/animals/1",
+							"raw": "http://localhost:8080/api/animals/1",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"animals",
 								"1"
 							]
@@ -414,7 +475,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Dr. Ali Demir\",\n  \"phone\": \"05550001122\",\n  \"email\": \"ali.demir@example.com\",\n  \"address\": \"Ata\\u015fehir\",\n  \"city\": \"\\u0130stanbul\"\n}",
+							"raw": "{\n  \"firstName\": \"Efe\",\n  \"lastName\": \"Kara\",\n  \"phone\": \"05550001122\",\n  \"email\": \"efe.kara@example.com\",\n  \"address\": \"Şişli\",\n  \"city\": \"Edirne\",\n  \"specialty\": \"Dahiliye\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,14 +483,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors",
+							"raw": "http://localhost:8080/api/doctors",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors"
 							]
 						}
@@ -438,6 +499,9 @@
 				},
 				{
 					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -446,15 +510,23 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors",
+							"raw": "localhost:8080/api/doctors",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors"
 							]
 						}
@@ -472,16 +544,15 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors/1",
+							"raw": "localhost:8080/api/doctors/12",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -498,16 +569,15 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors/1",
+							"raw": "localhost:8080/api/doctors/12",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -515,6 +585,9 @@
 				},
 				{
 					"name": "searchByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -523,15 +596,24 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors/search?name=Ali",
+							"raw": "http://localhost:8080/api/doctors/search?name=Ali",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors",
 								"search"
 							],
@@ -557,7 +639,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Dr. Ali G\\u00fcn\",\n  \"phone\": \"05559874521\",\n  \"email\": \"ali.gun@example.com\",\n  \"address\": \"Kad\\u0131k\\u00f6y\",\n  \"city\": \"\\u0130stanbul\"\n}",
+							"raw": "{\n  \"firstName\": \"Dr. Ali\",\n  \"lastName\": \"Demir\",\n  \"phone\": \"05551234567\",\n  \"email\": \"ali.a@example.com\",\n  \"address\": \"Bakıröy\",\n  \"city\": \"İstanbul\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -565,16 +647,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/doctors/1",
+							"raw": "http://localhost:8080/api/doctors/12",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"doctors",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -597,7 +679,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"doctorId\": 1,\n  \"availableDate\": \"2025-06-25\"\n}",
+							"raw": "{\n  \"doctorId\": 12,\n  \"availableDate\": \"2025-06-28\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -605,14 +687,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates",
+							"raw": "localhost:8080/api/available-dates",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates"
 							]
 						}
@@ -621,6 +702,9 @@
 				},
 				{
 					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -629,15 +713,23 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates",
+							"raw": "localhost:8080/api/available-dates",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates"
 							]
 						}
@@ -646,6 +738,9 @@
 				},
 				{
 					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -654,17 +749,25 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates/1",
+							"raw": "localhost:8080/api/available-dates/6",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -672,6 +775,9 @@
 				},
 				{
 					"name": "getByDoctorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -680,18 +786,26 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates/doctor/1",
+							"raw": "localhost:8080/api/available-dates/doctor/12",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates",
 								"doctor",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -708,16 +822,15 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates/1",
+							"raw": "localhost:8080/api/available-dates/7",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates",
-								"1"
+								"7"
 							]
 						}
 					},
@@ -735,7 +848,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"doctorId\": 1,\n  \"availableDate\": \"2025-06-26\"\n}",
+							"raw": "{\n  \"doctorId\": 12,\n  \"availableDate\": \"2025-06-25\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -743,16 +856,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/available-dates/1",
+							"raw": "localhost:8080/api/available-dates/6",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"available-dates",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -775,7 +887,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Kuduz\",\n  \"code\": \"K001\",\n  \"protectionStartDate\": \"2025-01-01\",\n  \"protectionFinishDate\": \"2025-12-31\",\n  \"animalId\": 1\n}",
+							"raw": "{\n  \"name\": \"Kuduz\",\n  \"code\": \"K001\",\n  \"protectionStartDate\": \"2025-01-01\",\n  \"protectionFinishDate\": \"2025-12-31\",\n  \"protectionEndDate\": \"2025-12-30\",\n  \"animalId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -783,14 +895,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines",
+							"raw": "http://localhost:8080/api/vaccines",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines"
 							]
 						}
@@ -808,14 +920,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines",
+							"raw": "localhost:8080/api/vaccines",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines"
 							]
 						}
@@ -833,14 +944,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines/1",
+							"raw": "localhost:8080/api/vaccines/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines",
 								"1"
 							]
@@ -859,14 +969,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines/1",
+							"raw": "localhost:8080/api/vaccines/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines",
 								"1"
 							]
@@ -885,14 +994,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines/animal/1",
+							"raw": "localhost:8080/api/vaccines/animal/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines",
 								"animal",
 								"1"
@@ -903,6 +1011,9 @@
 				},
 				{
 					"name": "filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -911,25 +1022,34 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines/filter?startDate=2025-06-01&endDate=2025-12-31",
+							"raw": "http://localhost:8080/api/vaccines/filter?start=2025-01-01&end=2025-12-31",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines",
 								"filter"
 							],
 							"query": [
 								{
-									"key": "startDate",
-									"value": "2025-06-01"
+									"key": "start",
+									"value": "2025-01-01"
 								},
 								{
-									"key": "endDate",
+									"key": "end",
 									"value": "2025-12-31"
 								}
 							]
@@ -949,7 +1069,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": 1,\n  \"name\": \"Kuduz G\\u00fcn\",\n  \"code\": \"K002\",\n  \"protectionStartDate\": \"2025-01-01\",\n  \"protectionFinishDate\": \"2025-12-31\",\n  \"animalId\": 1\n}",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Kuduz \",\n  \"code\": \"K002\",\n  \"protectionStartDate\": \"2025-01-01\",\n  \"protectionFinishDate\": \"2025-12-31\",\n  \"animalId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -957,14 +1077,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/vaccines/1",
+							"raw": "localhost:8080/api/vaccines/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"vaccines",
 								"1"
 							]
@@ -989,7 +1108,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"doctorId\": 1,\n  \"animalId\": 1,\n  \"appointmentDate\": \"2025-06-25T10:00:00\"\n}",
+							"raw": "{\n  \"doctorId\": 12,\n  \"animalId\": 1,\n  \"appointmentDate\": \"2025-06-25T10:00:00\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -997,14 +1116,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments",
+							"raw": "localhost:8080/api/appointments",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments"
 							]
 						}
@@ -1022,14 +1140,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments",
+							"raw": "localhost:8080/api/appointments",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments"
 							]
 						}
@@ -1047,14 +1164,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments/1",
+							"raw": "localhost:8080/api/appointments/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments",
 								"1"
 							]
@@ -1073,14 +1189,13 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments/1",
+							"raw": "localhost:8080/api/appointments/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments",
 								"1"
 							]
@@ -1090,6 +1205,9 @@
 				},
 				{
 					"name": "getByDoctorAndDate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1098,17 +1216,25 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments/search/doctor?doctorId=1&start=2025-06-25T00:00:00&end=2025-06-25T23:59:59",
+							"raw": "http://localhost:8080/api/appointments/doctor?doctorId=1&date=2025-06-25",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments",
-								"search",
 								"doctor"
 							],
 							"query": [
@@ -1117,12 +1243,8 @@
 									"value": "1"
 								},
 								{
-									"key": "start",
-									"value": "2025-06-25T00:00:00"
-								},
-								{
-									"key": "end",
-									"value": "2025-06-25T23:59:59"
+									"key": "date",
+									"value": "2025-06-25"
 								}
 							]
 						}
@@ -1131,6 +1253,9 @@
 				},
 				{
 					"name": "getByAnimalAndDate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1139,31 +1264,35 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments/search/animal?animalId=1&start=2025-06-25T00:00:00&end=2025-06-25T23:59:59",
+							"raw": "http://localhost:8080/api/appointments/animal?animalId=3&date=2025-06-25",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments",
-								"search",
 								"animal"
 							],
 							"query": [
 								{
 									"key": "animalId",
-									"value": "1"
+									"value": "3"
 								},
 								{
-									"key": "start",
-									"value": "2025-06-25T00:00:00"
-								},
-								{
-									"key": "end",
-									"value": "2025-06-25T23:59:59"
+									"key": "date",
+									"value": "2025-06-25"
 								}
 							]
 						}
@@ -1182,7 +1311,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"doctorId\": 1,\n  \"animalId\": 1,\n  \"appointmentDate\": \"2025-06-25T14:00:00\"\n}",
+							"raw": "{\n  \"doctorId\": 12,\n  \"animalId\": 1,\n  \"appointmentDate\": \"2025-06-25T14:00:00\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1190,16 +1319,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/appointments/1",
+							"raw": "localhost:8080/api/appointments/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"v1",
 								"appointments",
-								"1"
+								"2"
 							]
 						}
 					},
